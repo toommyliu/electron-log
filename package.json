@@ -8,13 +8,14 @@
     "node": ">= 14"
   },
   "scripts": {
-  "lint": "eslint '**/*.{js,cjs}' --ignore-pattern '**/dist/*.js' && tsc --noEmit",
-  "prepare": "tsup",
+    "build": "tsup",
+    "lint": "eslint '**/*.{js,cjs}' --ignore-pattern '**/dist/*.js' && tsc --noEmit",
+    "prepare": "npm run build",
     "test": "humile 'src/**/*spec.js'",
     "test:full": "npm run test && npm run lint && npm run test:e2e",
     "test:e2e": "humile 'e2e/**/*.spec.{js,cjs}' -R list",
     "postversion": "git push && git push --tags",
-    "prepack": "npm run test:full",
+    "prepublishOnly": "npm run test:full && npm run build",
     "preversion": "npm run test:full"
   },
   "typings": "src/index.d.ts",
