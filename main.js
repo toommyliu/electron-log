@@ -1,5 +1,6 @@
 'use strict';
 
-const main = require('./src/main');
+/* eslint-disable-next-line import/no-unresolved, import/extensions */
+const main = require('./dist/main');
 
 module.exports = main;

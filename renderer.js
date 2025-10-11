@@ -1,5 +1,6 @@
 'use strict';
 
-const renderer = require('./src/renderer');
+/* eslint-disable-next-line import/no-unresolved, import/extensions */
+const renderer = require('./dist/renderer');
 
 module.exports = renderer;

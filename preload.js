@@ -1,5 +1,6 @@
 'use strict';
 
-const preload = require('./src/renderer/electron-log-preload');
+/* eslint-disable-next-line import/no-unresolved, import/extensions */
+const preload = require('./dist/renderer/electron-log-preload');
 
 module.exports = preload;
