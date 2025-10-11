@@ -8,6 +8,9 @@ module.exports = {
   formatText,
   formatVariables,
   timeZoneFromOffset,
+  formatLocalizedDate,
+  formatLocalizedTime,
+  formatLocalizedDateTime,
 
   format({ message, logger, transport, data = message?.data }) {
     switch (typeof transport.format) {
@@ -66,6 +69,61 @@ function timeZoneFromOffset(minutesOffset) {
   return `${sign}${hours}:${minutes}`;
 }
 
+/**
+ * Format date using user's locale and internationalization settings
+ * @param {Date} date
+ * @return {string}
+ */
+function formatLocalizedDate(date) {
+  try {
+    return new Intl.DateTimeFormat().format(date);
+  } catch (error) {
+    // Fallback to ISO date if Intl is not available
+    return date.toISOString().split('T')[0];
+  }
+}
+
+/**
+ * Format time using user's locale and internationalization settings
+ * @param {Date} date
+ * @return {string}
+ */
+function formatLocalizedTime(date) {
+  try {
+    return new Intl.DateTimeFormat(undefined, {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+    }).format(date);
+  } catch (error) {
+    // Fallback to manual formatting if Intl is not available
+    const h = date.getHours().toString().padStart(2, '0');
+    const m = date.getMinutes().toString().padStart(2, '0');
+    const s = date.getSeconds().toString().padStart(2, '0');
+    return `${h}:${m}:${s}`;
+  }
+}
+
+/**
+ * Format date and time using user's locale and internationalization settings
+ * @param {Date} date
+ * @return {string}
+ */
+function formatLocalizedDateTime(date) {
+  try {
+    return new Intl.DateTimeFormat(undefined, {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+    }).format(date);
+  } catch (error) {
+    return date.toISOString().replace('T', ' ').slice(0, 19);
+  }
+}
+
 function formatScope({ data, logger, message }) {
   const { defaultLabel, labelLength } = logger?.scope || {};
   const template = data[0];
@@ -113,6 +171,11 @@ function formatVariables({ data, message }) {
         case 'ms': return date.getMilliseconds().toString(10).padStart(3, '0');
         case 'z': return timeZoneFromOffset(date.getTimezoneOffset());
         case 'iso': return date.toISOString();
+        
+        // Internationalization support
+        case 'date': return formatLocalizedDate(date);
+        case 'time': return formatLocalizedTime(date);
+        case 'datetime': return formatLocalizedDateTime(date);
 
         default: {
           return message.variables?.[name] || substring;

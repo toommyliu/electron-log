@@ -22,12 +22,30 @@ Example: ``'[{h}:{i}:{s}.{ms}] [{level}] {text}'``
 | ms          | Millisecond            |
 | z           | Timezone offset        |
 | iso         | date.toISOString()     |
+| date        | Localized date         |
+| time        | Localized time         |
+| datetime    | Localized date & time  |
 
 Also, you can use your own values:
 
 ```js
 log.variables.label = 'dev';
 log.transports.console.format = '[{h}:{i}:{s}.{ms}] [{label}] {text}';
+```
+
+## Internationalization
+
+The new `{date}`, `{time}`, and `{datetime}` format options use the user's locale settings:
+
+```js
+// Uses user's locale for date/time formatting
+log.transports.console.format = '[{datetime}] [{level}] {text}';
+
+// Individual components
+log.transports.console.format = '[{date} {time}] [{level}] {text}';
+
+// Mix with traditional formatting
+log.transports.console.format = '[{date} {h}:{i}:{s}] [{level}] {text}';
 ```
 
 ## Function
