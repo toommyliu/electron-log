@@ -1,3 +1,3 @@
 # electron-log
 
-[https://github.com/megahertz/electron-log] transpiled down to es2015
+[electron-log](https://github.com/megahertz/electron-log) transpiled down to es2015
