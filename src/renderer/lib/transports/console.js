@@ -18,7 +18,7 @@ const consoleMethods = {
 
 function consoleTransportRendererFactory(logger) {
   return Object.assign(transport, {
-    format: '{h}:{i}:{s}.{ms}{scope} › {text}',
+    format: '{h}:{i}:{s}.{ms}{scope} {text}',
     transforms: [formatDataFn],
 
     writeFn({ message: { level, data } }) {
