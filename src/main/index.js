@@ -48,9 +48,11 @@ externalApi.onIpcInvoke('__ELECTRON_LOG__', (_, { cmd = '', logId }) => {
 function processMessage(message) {
   const { rendererTransportsConfig, ...msg } = message;
   const logger = defaultLogger.Logger.getInstance(msg);
-  
+
   if (rendererTransportsConfig) {
-    logger.processMessage(msg, { transports: rendererTransportsConfig });
+    const filteredTransports = rendererTransportsConfig
+      .filter((transport) => transport);
+    logger.processMessage(msg, { transports: filteredTransports });
   } else {
     logger.processMessage(msg);
   }

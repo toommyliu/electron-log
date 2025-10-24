@@ -89,6 +89,18 @@ You can pass an array of transport names. Available transports are:
 - `'ipc'` - IPC transport
 - Any custom transport names you've added
 
+You can include falsy values (false, null, undefined, '', 0) in the array, which will be filtered out. This allows for conditional transport selection:
+
+```js
+// Conditional transport based on environment
+log.initialize({ 
+  rendererTransports: [
+    process.env.NODE_ENV === 'development' && 'console',
+    process.env.LOG_TO_FILE === 'true' && 'file',
+  ]
+});
+```
+
 Example: Log renderers to file but not console:
 ```js
 log.initialize({ 
