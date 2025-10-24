@@ -2,7 +2,7 @@
 
 const electron = require('electron');
 const ElectronExternalApi = require('./ElectronExternalApi');
-const { initialize } = require('./initialize');
+const { initialize, getRendererTransportsConfig } = require('./initialize');
 const createDefaultLogger = require('../node/createDefaultLogger');
 
 const externalApi = new ElectronExternalApi({ electron });
@@ -19,9 +19,12 @@ externalApi.onIpc('__ELECTRON_LOG__', (_, message) => {
   }
 
   const date = new Date(message.date);
+  const rendererTransportsConfig = getRendererTransportsConfig();
+  
   processMessage({
     ...message,
     date: date.getTime() ? date : new Date(),
+    rendererTransportsConfig,
   });
 });
 
@@ -43,5 +46,12 @@ externalApi.onIpcInvoke('__ELECTRON_LOG__', (_, { cmd = '', logId }) => {
 });
 
 function processMessage(message) {
-  defaultLogger.Logger.getInstance(message)?.processMessage(message);
+  const { rendererTransportsConfig, ...msg } = message;
+  const logger = defaultLogger.Logger.getInstance(msg);
+  
+  if (rendererTransportsConfig) {
+    logger.processMessage(msg, { transports: rendererTransportsConfig });
+  } else {
+    logger.processMessage(msg);
+  }
 }

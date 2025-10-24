@@ -7,6 +7,7 @@ const preloadInitializeFn = require('../renderer/electron-log-preload');
 
 let preloadInitialized = false;
 let spyConsoleInitialized = false;
+let rendererTransportsConfig = null;
 
 module.exports = {
   initialize({
@@ -15,8 +16,10 @@ module.exports = {
     includeFutureSession,
     logger,
     preload = true,
+    rendererTransports,
     spyRendererConsole = false,
   }) {
+    rendererTransportsConfig = rendererTransports;
     externalApi.onAppReady(() => {
       try {
         if (preload) {
@@ -36,6 +39,10 @@ module.exports = {
         logger.warn(err);
       }
     });
+  },
+
+  getRendererTransportsConfig() {
+    return rendererTransportsConfig;
   },
 };
 

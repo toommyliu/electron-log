@@ -64,7 +64,48 @@ __electronLog.info('Log from the renderer');
 Please be aware that `__electronLog` global variable only exposes log functions,
 no errorHandler, scope and other members.
 
-## 4. Spy on `console.log` calls
+## 4. Configure which transports handle renderer logs
+
+By default, renderer process logs are processed by all configured transports in
+the main process (e.g., console, file, remote, etc.). You can control which
+transports should handle renderer logs by using the `rendererTransports` option.
+This is useful if you want to isolate main and renderer logs, or vary logging
+behavior per renderer process.
+
+**main.js**
+```js
+import log from 'electron-log/main';
+
+// Renderer logs will only be written to console, not to file
+log.initialize({ 
+  rendererTransports: ['console']
+});
+```
+
+You can pass an array of transport names. Available transports are:
+- `'console'` - Browser/Node console
+- `'file'` - File transport
+- `'remote'` - Remote transport
+- `'ipc'` - IPC transport
+- Any custom transport names you've added
+
+Example: Log renderers to file but not console:
+```js
+log.initialize({ 
+  rendererTransports: ['file']
+});
+```
+
+Example: Don't log renderers at all:
+```js
+log.initialize({ 
+  rendererTransports: []
+});
+```
+
+If `rendererTransports` is not specified, all transports handle renderer logs.
+
+## 5. Spy on `console.log` calls
 
 It's possible to collect logs written by `console.log` in the renderer process
 
@@ -81,7 +122,7 @@ main process. But in that case, it's not possible to log object.
 For example, when `console.log('test', { a: 1 })` is called in a renderer,
 `test [Object]` is received on the main side.
 
-## 5. Using IPC directly
+## 6. Using IPC directly
 
 Starting from electron-log v5, an electron-log IPC call has a constant
 signature. So you can call it directly if you don't want to use a renderer-side
