@@ -664,6 +664,7 @@ declare namespace Logger {
         getSessions?: () => object[];
         includeFutureSessions?: boolean;
         preload?: string | boolean;
+        rendererTransports?: string[];
         spyRendererConsole?: boolean;
       },
     ): void;
