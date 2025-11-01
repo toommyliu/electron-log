@@ -5,7 +5,6 @@ const os = require('os');
 const path = require('path');
 const FileRegistry = require('./FileRegistry');
 const { transform } = require('../../../core/transforms/transform');
-const { removeStyles } = require('../../../core/transforms/style');
 const {
   format,
   concatFirstStringElements,
@@ -39,7 +38,7 @@ function fileTransportFactory(
     maxSize: 1024 ** 2,
     readAllLogs,
     sync: true,
-    transforms: [removeStyles, format, concatFirstStringElements, toString],
+    transforms: [format, concatFirstStringElements, toString],
     writeOptions: { flag: 'a', mode: 0o666, encoding: 'utf8' },
 
     archiveLogFn(file) {

@@ -4,23 +4,6 @@ Displays a log message in the console
 
 ## Options
 
-#### `colorMap` {Record<LogLevel, string>}
-
-Default:
-```
-{
-  error: 'red', 
-  warn: 'yellow',
-  info: 'cyan',
-  verbose: 'unset',
-  debug: 'gray',
-  silly: 'gray',
-  default: 'unset',
-}
-```
-
-A map of log levels to colors.
-
 #### `format` {string | (params: FormatParams) => any[]}
 
 Default: `'[{y}-{m}-{d} {h}:{i}:{s}.{ms}] [{level}] {text}'`
@@ -33,13 +16,6 @@ Determines how to serialize log message while writing to a file.
 Default: `false`
 
 Filter log messages which can be sent via the transport.
-
-#### `useStyles` {boolean}
-
-By default, it tries to determine whether it's possible to use colors in
-console. You can set it to true/false to force enable/disable that.
-
-Default: `undefined`
 
 #### `writeFn` {(options: { message: LogMessage }) => void}
 

@@ -99,10 +99,9 @@ DevTools console (renderer process).
 ##### Options
 
  - **[format](docs/transports/format.md)**, default
-   `'%c{h}:{i}:{s}.{ms}%c › {text}'` (main),
+   `'{h}:{i}:{s}.{ms}{scope} {text}'` (main),
    `'{h}:{i}:{s}.{ms} › {text}'` (renderer)
  - **level**, default 'silly'
- - **useStyles**, force enable/disable styles
 
 [Read more about console transport](docs/transports/console.md).
 

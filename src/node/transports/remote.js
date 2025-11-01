@@ -3,7 +3,6 @@
 const http = require('http');
 const https = require('https');
 const { transform } = require('../../core/transforms/transform');
-const { removeStyles } = require('../../core/transforms/style');
 const { toJSON, maxDepth } = require('../transforms/object');
 
 module.exports = remoteTransportFactory;
@@ -14,7 +13,7 @@ function remoteTransportFactory(logger) {
     depth: 6,
     level: false,
     requestOptions: {},
-    transforms: [removeStyles, toJSON, maxDepth],
+    transforms: [toJSON, maxDepth],
 
     makeBodyFn({ message }) {
       return JSON.stringify({
