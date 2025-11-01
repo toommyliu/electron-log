@@ -31,7 +31,7 @@ function fileTransportFactory(
 
   return Object.assign(transport, {
     fileName: getDefaultFileName(logger.variables.processType),
-    format: '[{y}-{m}-{d} {h}:{i}:{s}.{ms}] [{level}]{scope} {text}',
+    format: '[{y}-{m}-{d} {h}:{i}:{s}.{ms}] ({level}){scope} {text}',
     getFile,
     inspectOptions: { depth: 5 },
     level: 'silly',

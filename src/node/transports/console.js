@@ -22,7 +22,7 @@ const consoleMethods = {
 module.exports = consoleTransportFactory;
 
 // const separator = process.platform === 'win32' ? '>' : '›';
-const DEFAULT_FORMAT = '{h}:{i}:{s}.{ms}{scope} {text}';
+const DEFAULT_FORMAT = '[{y}-{m}-{d} {h}:{i}:{s}.{ms}] ({level}){scope} {text}';
 
 Object.assign(consoleTransportFactory, {
   DEFAULT_FORMAT,
